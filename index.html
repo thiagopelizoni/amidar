@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>AMIDAR 2600</title>
+  <meta name="description" content="Tributo jogavel ao Amidar do Atari 2600, feito em JavaScript puro.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="marquee">
+    <h1>AMIDAR</h1>
+    <div class="sub">Tributo ao Atari 2600 &middot; 1982</div>
+    <div class="stripes"><span></span><span></span><span></span><span></span><span></span></div>
+  </header>
+
+  <main class="tv" aria-label="Televisor com o jogo">
+    <div class="crt">
+      <canvas id="screen" aria-label="Tela do jogo Amidar"></canvas>
+    </div>
+    <div class="deck">
+      <span class="brand">VIDEO COMPUTER SYSTEM</span>
+      <div class="switches">
+        <button class="switch" data-switch="tv" aria-pressed="false" title="Chave COR / P&amp;B (C)"><span class="lever"></span><span class="label">COR &middot; P&amp;B</span></button>
+        <button class="switch" data-switch="difficulty" aria-pressed="false" title="Chave de dificuldade (L)"><span class="lever"></span><span class="label">DIFICULDADE</span></button>
+        <button class="switch momentary" data-switch="reset" title="Reset: novo jogo"><span class="lever"></span><span class="label">RESET</span></button>
+      </div>
+      <span class="led" title="Ligado"></span>
+    </div>
+  </main>
+
+  <div id="pad" aria-label="Controles de toque">
+    <div class="dpad">
+      <button class="up" data-dir="up" aria-label="Cima">&#9650;</button>
+      <button class="left" data-dir="left" aria-label="Esquerda">&#9664;</button>
+      <button class="right" data-dir="right" aria-label="Direita">&#9654;</button>
+      <button class="down" data-dir="down" aria-label="Baixo">&#9660;</button>
+    </div>
+    <div class="buttons">
+      <button class="fire" data-action="jump" aria-label="Pular">PULO</button>
+      <button class="start" data-action="action" aria-label="Iniciar ou pausar">START</button>
+    </div>
+  </div>
+
+  <section class="manual" aria-label="Manual de instrucoes">
+    <h2>Manual do jogador</h2>
+    <ul>
+      <li><b>Setas/WASD</b> movem o gorila</li>
+      <li><b>Espaco/Z/X</b> faz os inimigos pularem</li>
+      <li><b>Enter</b> inicia &middot; <b>P</b> pausa</li>
+      <li><b>M</b> <span id="mute-state">som ligado</span></li>
+      <li><b>F</b> <span id="flicker-state">flicker suave</span></li>
+      <li><b>C</b> <span id="tv-state">TV colorida</span></li>
+      <li><b>L</b> <span id="diff-state">dificuldade novato</span></li>
+      <li>Contorne um box inteiro e ele se enche: 50 pontos</li>
+      <li>Horizontais valem de 1 a 6; verticais, 1</li>
+      <li>Feche os 4 cantos e os inimigos viram galinhas: 100 cada</li>
+      <li>4 pulos por gorila; o Tracer so ronda a borda</li>
+      <li>Rodadas pares: rolo de pintura contra porcos</li>
+    </ul>
+  </section>
+
+  <footer>Recriacao afetiva, sem fins comerciais, do cartucho de 1982 (Konami, versao 2600 da Parker Brothers). Aperte Enter e boa sorte.</footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/game.js"></script>
+  <script>window.AMI.boot();</script>
+</body>
+</html>
