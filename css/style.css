@@ -1,0 +1,361 @@
+/* Sala de estar de 1982: TV de tubo, console de madeira, cartucho Atari. Tema unico e deliberado. */
+
+:root {
+  color-scheme: dark;
+  --room: #0E0B08;
+  --room-glow: #1A1208;
+  --wood-hi: #7B4E2C;
+  --wood: #5C3A22;
+  --wood-dark: #3E2715;
+  --bezel: #17140F;
+  --bezel-edge: #2A241B;
+  --amber: #DE9E4E;
+  --amber-bright: #F0C070;
+  --screen-rose: #B74A62;
+  --screen-blue: #3C8FCF;
+  --paper: #E8DCC0;
+  --paper-dim: #B8A987;
+  --led: #E4442A;
+  --fire: #C8281E;
+  --stripe-r: #C0392B;
+  --stripe-o: #E67E22;
+  --stripe-y: #E6B422;
+  --stripe-g: #3E9B4F;
+  --stripe-b: #3355BB;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 30%, var(--room-glow) 0%, var(--room) 70%),
+    var(--room);
+  color: var(--paper);
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size: 20px;
+  line-height: 1.35;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 48px;
+}
+
+.marquee {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marquee h1 {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(20px, 5vw, 34px);
+  color: var(--amber-bright);
+  margin: 0 0 10px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 18px rgba(222, 158, 78, 0.45), 3px 3px 0 #6B3A10;
+}
+
+.marquee .sub {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--paper-dim);
+  text-transform: uppercase;
+}
+
+/* Faixa arco-iris do cartucho Atari */
+.stripes {
+  display: flex;
+  width: min(92vw, 560px);
+  height: 6px;
+  margin: 14px auto 0;
+}
+
+.stripes span { flex: 1; }
+.stripes span:nth-child(1) { background: var(--stripe-r); }
+.stripes span:nth-child(2) { background: var(--stripe-o); }
+.stripes span:nth-child(3) { background: var(--stripe-y); }
+.stripes span:nth-child(4) { background: var(--stripe-g); }
+.stripes span:nth-child(5) { background: var(--stripe-b); }
+
+/* ------------------------------------------------------------------ a TV */
+
+.tv {
+  background: linear-gradient(160deg, var(--bezel-edge) 0%, var(--bezel) 40%, #0C0A07 100%);
+  border-radius: 26px;
+  padding: 26px 26px 16px;
+  max-width: 100%;
+  box-shadow:
+    0 0 60px rgba(183, 74, 98, 0.16),
+    0 24px 60px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.crt {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+/* A tela e desenhada na resolucao do dispositivo pelo proprio jogo (pixels do
+   2600 alinhados ao pixel fisico, com scanlines por linha logica). */
+#screen {
+  display: block;
+  width: min(84vw, 760px, max(300px, calc((100svh - 250px) * 358 / 280)));
+  aspect-ratio: 358 / 280; /* proporcao do original: pixels mais largos que altos */
+  touch-action: none;
+  cursor: pointer;
+  filter: saturate(1.08) contrast(1.04);
+  transition: filter 0.25s ease;
+}
+
+#screen.bw { filter: grayscale(1) contrast(1.12) brightness(1.05); }
+
+/* Vinheta e reflexo do vidro por cima do canvas */
+.crt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 40% at 30% 12%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(ellipse 120% 110% at 50% 45%, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, 0.55) 100%);
+  border-radius: 14px;
+}
+
+/* Painel de madeira sob a tela, como o VCS */
+.deck {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(92deg, var(--wood) 0px, var(--wood-hi) 7px, var(--wood) 14px, var(--wood-dark) 26px, var(--wood) 34px);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.deck .brand {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--paper);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
+}
+
+.deck .led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--led);
+  box-shadow: 0 0 8px var(--led), 0 0 16px rgba(228, 68, 42, 0.5);
+}
+
+/* Chaves de alavanca do console: pretas, cromadas na ponta, rotulo abaixo. */
+.switches {
+  display: flex;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 2px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--paper);
+}
+
+.switch .lever {
+  position: relative;
+  width: 16px;
+  height: 22px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #0A0806 0%, #1E1A14 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.switch .lever::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 2px;
+  height: 9px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #D8D2C4 0%, #8C8578 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  transition: top 0.12s ease;
+}
+
+.switch[aria-pressed="true"] .lever::after { top: 11px; }
+.switch.momentary:active .lever::after { top: 11px; }
+
+.switch .label {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 6px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------- manual/controles */
+
+.manual {
+  width: min(92vw, 652px);
+  margin-top: 26px;
+  border: 1px solid var(--wood-dark);
+  border-radius: 4px;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, #14100B 0%, #0F0C08 100%);
+}
+
+.manual h2 {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--amber);
+  margin: 0 0 12px;
+  text-transform: uppercase;
+}
+
+.manual ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 4px 24px;
+}
+
+.manual li { color: var(--paper-dim); }
+
+.manual b {
+  color: var(--paper);
+  font-weight: normal;
+  background: var(--wood-dark);
+  border-radius: 3px;
+  padding: 0 6px;
+  margin-right: 6px;
+}
+
+footer {
+  margin-top: 22px;
+  font-size: 16px;
+  color: #6E6250;
+  text-align: center;
+  max-width: 652px;
+}
+
+/* ---------------------------------------------- d-pad e botao de pulo tateis */
+
+#pad {
+  display: none;
+  width: min(92vw, 420px);
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#pad .dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(3, 60px);
+  gap: 5px;
+  touch-action: none;
+}
+
+#pad button {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--amber);
+  background: linear-gradient(180deg, #1E1912 0%, #120E09 100%);
+  border: 1px solid var(--wood-dark);
+  border-radius: 10px;
+  box-shadow: 0 3px 0 #000;
+  touch-action: none;
+}
+
+#pad button:active { transform: translateY(2px); box-shadow: 0 1px 0 #000; }
+
+#pad .up { grid-area: 1 / 2; }
+#pad .left { grid-area: 2 / 1; }
+#pad .right { grid-area: 2 / 3; }
+#pad .down { grid-area: 3 / 2; }
+
+#pad .buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* O botao vermelho do joystick CX40 */
+#pad .fire {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #FFE9E0;
+  background: radial-gradient(circle at 35% 30%, #F0584A 0%, var(--fire) 55%, #7A140E 100%);
+  border: 3px solid #1A1510;
+  box-shadow: 0 5px 0 #000, 0 0 18px rgba(200, 40, 30, 0.35);
+}
+
+#pad .fire:active { transform: translateY(3px); box-shadow: 0 2px 0 #000; }
+
+#pad .start {
+  font-size: 8px;
+  padding: 10px 14px;
+}
+
+@media (pointer: coarse) {
+  #pad { display: flex; }
+}
+
+body.touch #pad { display: flex; }
+
+@media (max-width: 560px) {
+  .tv { padding: 14px 12px 10px; border-radius: 18px; }
+  .crt, .crt::after { border-radius: 10px; }
+  #screen { width: min(calc(100vw - 56px), 760px, max(260px, calc((100svh - 330px) * 358 / 280))); }
+  .deck .brand { font-size: 6px; letter-spacing: 1px; }
+  .switches { gap: 10px; }
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--amber-bright);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee h1 { animation: phosphor 3.2s ease-in-out infinite alternate; }
+  @keyframes phosphor {
+    from { text-shadow: 0 0 12px rgba(222, 158, 78, 0.3), 3px 3px 0 #6B3A10; }
+    to { text-shadow: 0 0 24px rgba(222, 158, 78, 0.6), 3px 3px 0 #6B3A10; }
+  }
+
+  /* Liga o tubo: a imagem abre de uma linha brilhante, como o CRT aquecendo. */
+  #screen { animation: power-on 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+  @keyframes power-on {
+    0% { transform: scale(1, 0.004); filter: brightness(4); }
+    45% { transform: scale(1, 0.004); filter: brightness(4); }
+    100% { transform: scale(1, 1); }
+  }
+}
